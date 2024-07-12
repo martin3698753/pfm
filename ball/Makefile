@@ -1,3 +1,3 @@
-ball:
-	gcc ball.c -o ball -lm
-	./ball
+hello:
+	gcc ball.c -lm
+	./a.out
