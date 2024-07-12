@@ -14,7 +14,7 @@ matplotlib.rcParams.update({
 })
 
 tmax = 1000
-N = 1000
+N = 10000
 
 def one_walk(tmax):
     t = np.arange(0, tmax)
@@ -42,9 +42,8 @@ def make_graph(N, tmax, supa):
     t = np.arange(0, tmax)
 ###############################################################################################################################################################
     for i in range(0, tmax): ##### Tady to dělá tu křivku <x^2>
-        x[i] = np.mean(supa[:,i]) ### Beru všechny budy z křivek a dávám je do průměru (format podobny jako v Matlabu)
-    x = np.power(x, 2) ##### Umocní to celý array čísel na 2 mocninu
-    plt.plot(t, x, linewidth=3, c='black')
+        x[i] = np.mean(np.power(supa[:,i],2)) ### Beru všechny budy z křivek a dávám je do průměru (format podobny jako v Matlabu)
+    plt.plot(t, x, linewidth=2, c='black')
 ####################################################################################################################3
 
 def make_hist(supa, ti, a):
@@ -64,13 +63,13 @@ def make_hist(supa, ti, a):
     plt.clf()
     return np.array([ti, mu, sig])
 
-def func(t, a, b, c):
-    return a*t**b+c
+def func(x, a, b, c):
+    return a*x**b+c
 
 def make_tab(N, tmax, supa):
-    vals = np.zeros((18, 3))
+    vals = np.zeros((12, 3))
     mint = int(3*tmax/10)
-    rg = np.random.uniform(mint, tmax, 18)
+    rg = np.random.uniform(mint, tmax, 12)
     a = 0
     for i in rg:
         vals[a] = make_hist(supa, i, a)
@@ -96,7 +95,9 @@ def make_tab(N, tmax, supa):
         'mu':vals[:,1],
         'sigma':y,
     })
+    df = df.sort_values(by=['time'])
     df = df.round(3)
+    print(df)
     df.to_csv('data.csv', index=False)
 
 supa = make_supa(N, tmax)
