@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{csvsimple}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\title{Objem D-rozměrné koule}
+\author{Martin Skok}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  Střílení do koule o D rozměrech
+\end{abstract}
+
+\section{Zadání}
+Úloha 5.4: Objem D-rozměrné koule
+Určete metodou náhodného střílení objem koule v D-rozměrném prostoru, která je určena podmínkou
+$$x_{1}^{2} + x_{2}^{2} \cdots + x_{D}^{2} \leq 1$$
+kde
+$$\vec{r} = (x_{1}, x_{2}, \cdots x_{D})$$
+je polohový vektor v D rozměrném prostoru
+Určete pro D = 2, 3 a alespoň dvě větší hodnoty
+\section{Popis kódu}
+Nejdříve jsem nadefinoval funkci \textbf{rnd}, která bude podle nastaveného poloměru koule
+generovat náhodná čísla. Funkce \textbf{comp vol} potom podle definované dimenze v tomto rozmezí
+nastřílí $N$ náhodných bodů a určí, jestli leží v kouli nebo ne.
+Objem počítám jako
+$$\frac{n_{circle}\cdot 2^{DIM}}{N}$$
+Kde $n_{circle}$ je počet bodů v kouli, $DIM$ je dimenze prostoru a $N$ je celkový
+počet výstřelů.\\
+Tento proces opakuji $n$ krát a všechny hodnoty ukládám do $n$ velkého řetezce.
+Poté ještě počítám průměr jako
+$$\overline{V} = \frac{ \Sigma_{i}^{n}V_{i} }{n}$$
+a střední kvadratickou odchylku
+$$\sigma = \sqrt{\frac{ \Sigma_{i}^{n}(V_{i} - \overline{V})^{2} } {n(n-1)}}$$
+Kde $V_{i}$ je objem z jednoho měření a $n$ je počet měření.
+\newpage
+Teoretickou hodnotu D-prostorové koule jsem počítal jako
+$$V_{n}(R) = \frac{\pi^{n/2}}{\Gamma (\frac{n}{2} + 1)}R^{n}$$
+kde $n$ je dimenze a $R$ je poloměr koule.
+
+\section{Data}
+Všechno jsem dělal jako jednotkovou kouli, tedy poloměr koule byl vždy jedna.
+Počet nástřelů jsem zvolil $N = 1000000$ a počet opakování měření $n = 100$.
+Toto mi přišlo jako ideální, jelikož mi vycházela malá chyba.
+Nejdříve jsem spustil program 2 dimenze a 3 dimenze. Potom jsem udělal ještě
+4 a 6 dimenzí.
+  \subsection{2 DIM}
+Teoretická hodnota pro tuto konfiguraci byla $V_{ter} = 3.141593 \approx \pi$\\
+Nasimulovaný průměr mi vyšel $\overline{V} = 3.141618$\\
+a odchylka mi vyšla $\sigma = 0.00016 = 0.016 \%$
+\subsection{3 DIM}
+$V_{ter} = 4.188790$\\
+$\overline{V} = 4.188328$\\
+$\sigma = 0.000383 = 0.0383 \%$
+\subsection{4 DIM}
+$V_{ter} = 4.934802$\\
+$\overline{V} = 4.934809$\\
+$\sigma = 0.000825 = 0.0825 \%$
+\subsection{6 DIM}
+$V_{ter} = 5.167713$\\
+$\overline{V} = 5.165654$\\
+$\sigma = 0.001668 = 0.1668 \%$
+\newpage
+\section{Závěr}
+Podařilo se mi úspěšně určit objem 2, 3, 4 a 6 dimenzionálních koulí. Nasimulované hodnoty
+se blíží k teoretickým hodnotám.
+\end{document}

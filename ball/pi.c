@@ -5,7 +5,7 @@
 int main()
 {
   unsigned int seed = (unsigned int)time(NULL);
-  int n = 1000000000;
+  int n = 100000;
   int ncircle = 0;
   time_t walltime;
   srand(seed);
